@@ -39,15 +39,10 @@ nextWeekTasksEntry = Text(window, height=7, width=50)
 nextWeekTasksEntry.pack()
 
 def generatePDF(empID, empName, empDepartment, completedTasksList, ongoingTasksList, nextWeekTasksList):
-    print("Employee ID: ", empID)
-    print("Employee Name: ", empName)
-    print("Employee Department: ", empDepartment)
-    print("Completed Tasks: ", completedTasksList)
-    print("Ongoing Tasks", ongoingTasksList)
-    print("Next Week Tasks", nextWeekTasksList)
-    fileName = "test.pdf"
+
+    fileName = "report.pdf"
     res = canvas.Canvas(fileName)
-    res.setTitle("TEST")
+    res.setTitle("report")
     res.setFont("Courier-Bold",24)
     res.drawString(50,775,"SAMPLE COMPANY")
     res.setFont("Courier-Bold",16)
@@ -58,13 +53,35 @@ def generatePDF(empID, empName, empDepartment, completedTasksList, ongoingTasksL
     res.drawString(50,675,"Employee Name: "+empName)
     res.drawString(50,650,"Employee Department: "+empDepartment)
 
-    res.setFont("Courier-Bold", 14)
-    res.drawString(50,600, "Completed Tasks: ")
-    res.setFont("Courier", 12)
-    i = 600
-    for tasks in completedTasksList:
-        # write text
+    text = res.beginText(50,600)
 
+    text.setFont("Courier-Bold", 14)
+    text.textLine("Completed Tasks: ")
+    text.setFont("Courier", 12)
+    text.textLine("")
+    for element in completedTasksList:
+        text.textLine("> "+element)
+    text.textLine("")
+
+    text.setFont("Courier-Bold", 14)
+    text.textLine("Ongoing Tasks: ")
+    text.setFont("Courier", 12)
+    text.textLine("")
+    for element in ongoingTasksList:
+        text.textLine("> "+element)
+    text.textLine("")
+
+    text.setFont("Courier-Bold", 14)
+    text.textLine("Next Week Tasks: ")
+    text.setFont("Courier", 12)
+    text.textLine("")
+    for element in nextWeekTasksList:
+        text.textLine("> "+element)
+    text.textLine("")
+
+
+
+    res.drawText(text)
     res.save()
 
 
